@@ -1,22 +1,3 @@
-ul li{ /*don't know if this is specific enough to the nav links e.g needs to only affect them*/
-  list-style-type: none;
-  background-color: aqua;
-  color:crimson;
-}
-
-
-.nav{ /*styling for the navigation bar. Makes it a row and spaces it evenly*/
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  background-color: blue;
-  color: cadetblue;
-}
-
-body{
-  background-color: brown;
-  color: plum;
-}
 
 h1{
   background-color: azure;
