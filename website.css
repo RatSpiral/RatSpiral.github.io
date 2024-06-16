@@ -1,5 +1,6 @@
 ul li{ /*don't know if this is specific enough to the nav links e.g needs to only affect them*/
   list-style-type: none;
+  background-color: aqua;
 }
 
 
@@ -7,5 +8,6 @@ ul li{ /*don't know if this is specific enough to the nav links e.g needs to onl
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  background-color: blue;
 }
 
