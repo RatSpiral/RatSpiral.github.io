@@ -1,6 +1,7 @@
 ul li{ /*don't know if this is specific enough to the nav links e.g needs to only affect them*/
   list-style-type: none;
   background-color: aqua;
+  color:crimson;
 }
 
 
@@ -9,5 +10,15 @@ ul li{ /*don't know if this is specific enough to the nav links e.g needs to onl
   flex-direction: row;
   justify-content: space-evenly;
   background-color: blue;
+  color: cadetblue;
 }
 
+body{
+  background-color: brown;
+  color: plum;
+}
+
+h1{
+  background-color: azure;
+  color: purple;
+}
