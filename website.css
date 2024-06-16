@@ -1,1 +1,10 @@
 <!-- where my css will go -->
+
+.nav{
+
+  ul {
+    list-style-type: none;
+    background-color: black;
+  }
+
+}
