@@ -1,5 +1,14 @@
+.navbar{
 
-h1{
-  background-color: azure;
-  color: purple;
+display: flex;
+justify-content: space-evenly;
+
+ ul {
+  background-color: black;
+  list-style-type: none;
+ } 
+
+
+
+
 }
