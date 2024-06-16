@@ -1,10 +1,11 @@
-ul {
-    list-style-type: none;
-    background-color: #333;
-  }
+ul li{ /*don't know if this is specific enough to the nav links e.g needs to only affect them*/
+  list-style-type: none;
+}
 
-li {
 
-  display: inline;
+.nav{ /*styling for the navigation bar. Makes it a row and spaces it evenly*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
