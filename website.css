@@ -1,14 +1,14 @@
 
-
+#container{
+  background-color: lightblue;
+}
 
 .navbar{
-
  .name{
   float: left;
-  
+  color: lightblue;
   text-align: center;
   padding: 14px 16px;
-  background-color: green;
  }
 
  ul {
@@ -33,3 +33,14 @@
  }
 
 }
+
+.textbox{
+border-style: solid;
+margin-top:10px;
+}
+
+.intro{
+  float:left;
+  width: 50%;
+}
+
