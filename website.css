@@ -6,7 +6,7 @@
 .navbar{
  .name{
   float: left;
-  color: lightblue;
+  color: white;
   text-align: center;
   padding: 14px 16px;
  }
@@ -37,10 +37,20 @@
 .textbox{
 border-style: solid;
 margin-top:10px;
+background-color: white;
 }
 
 .intro{
   float:left;
   width: 50%;
+  height: 100%;
+  margin-top: 10px; 
+}
+
+.image{
+  float: right;
+  width: 50%;
+  height:auto;
+  padding-left: 20px;
 }
 
