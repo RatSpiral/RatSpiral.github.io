@@ -14,6 +14,7 @@ var rows = 20;
 var cols = 20;
 var board;
 var context; //what we use to draw with
+var gameOver = false;
 
 //snake code!
 var snakeX = blockSize * 5;
@@ -40,6 +41,10 @@ window.onload = function(){ //this happens when window is loaded.
 }
 
 function update(){
+
+    if(gameOver){
+        return;
+    }
     //board (canvas)
     drawBoard();
     //context.fillStyle = "lightGreen";
@@ -65,7 +70,18 @@ function update(){
     //snake
     createSnake();
    
+// game over conditions
+if (snakeX < 0 || snakeX > cols*blockSize || snakeY <0 || snakeY > rows*blockSize){
+    gameOver = true;
+    alert("Game Over! You left the game board!"); //causes notification to pop up!
+}
 
+for (let i = 0; i < snakeBody.length; i++){
+    if(snakeX==snakeBody[i][0] && snakeY == snakeBody[i][1]){
+        gameOver = true;
+        alert("Game Over! You touched your tail!")
+    }
+}
     
 }
 
