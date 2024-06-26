@@ -1,69 +1,25 @@
 <!DOCTYPE html>
+<html>
 
-<html lang="en">
-
-<head> 
-<title>Web Game</title>
-
-<style>
-    canvas{
-    background: black;}
-
-</style>
-
+<head>
+  <meta charset = "UTF-8">
+  <meta name = "viewport", content = "width=device-width">
+  <title>Snake Game!</title>
+  <link rel = "stylesheet" href = "snakeGame.css">
+  <script src="snakeGame.js"></script>
 
 </head>
 
 <body>
-<!--This creates a canvas attribute we can use as the game screen-->
-<canvas id="gameCanvas" width="450" height="450"></canvas>
-<button id="runButton">Start game</button>
-
-<script>
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-const ballRadius = 10;
-let x = canvas.width / 2;
-let y = canvas.height - 30;
-let dx = 2;
-let dy = -2;
-
-function drawBall() {
-  ctx.beginPath();
-  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = "#0095DD";
-  ctx.fill();
-  ctx.closePath();
-}
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBall();
-
-  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-    dx = -dx;
-  }
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
-    dy = -dy;
-  }
-
-  x += dx;
-  y += dy;
-}
-
-function startGame() {
-  setInterval(draw, 10);
-}
-
-document.getElementById("runButton").addEventListener("click", function () {
-  startGame();
-  this.disabled = true;
-});
+<h1>Snake Game!</h1>
+<canvas id = "board"></canvas> <!--Creating canvas that will act as the game board. ID allows it to be referenced in js-->
 
 
-</script>
 
 </body>
 
 
 </html>
+
+
+<!--Looking to create the snake game as a way of developing my skills!-->
