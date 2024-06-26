@@ -1,0 +1,5 @@
+body{ /*Creating minor styling e.g changing font and ensuring all content (including canvas) is central*/
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+}
+
