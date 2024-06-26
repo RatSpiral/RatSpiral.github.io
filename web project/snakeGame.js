@@ -14,6 +14,7 @@ var rows = 20;
 var cols = 20;
 var board;
 var context; //what we use to draw with
+var score = 0;
 var gameOver = false;
 
 //snake code!
@@ -27,6 +28,12 @@ var snakeBody = [];
 var appleX;
 var appleY;
 
+
+//rotten apple
+var rotX = 0 * blockSize;
+var rotY = 0 * blockSize;
+
+
 window.onload = function(){ //this happens when window is loaded.
     //get the board
     board = document.getElementById("board");
@@ -35,6 +42,7 @@ window.onload = function(){ //this happens when window is loaded.
     context = board.getContext("2d");
 
     randomFood(); //places!
+    randomRot();
     document.addEventListener("keyup", changeDirection);
   
     setInterval(update, 1000/10); //every hundred milliseconds, it will run the update function
@@ -50,14 +58,26 @@ function update(){
     //context.fillStyle = "lightGreen";
     //context.fillRect(0,0,board.width,board.height) //starting at the corner of the page e.g (0,0) and make it light green
 
-    //Apple
+    //Apple - tried to put this in a function but i couldn't get it working! will revisit later.
     context.fillStyle = "red";
     context.fillRect(appleX,appleY,blockSize,blockSize);
 
     if (snakeX == appleX && snakeY == appleY){
+        score++;
         snakeBody.push([appleX,appleY]); //grows the next part of the body where the food was. 
         randomFood();
+        randomRot();
     }
+
+    //Evil Apple???
+    for(let i = 0; i<score;i++){
+    context.fillStyle = "black";
+    context.fillRect(rotX+(i*25),rotY+(i*25),blockSize,blockSize)
+    if(snakeX==rotX && snakeY == rotY){
+        randomRot();
+        alert("rot!");
+    }
+}
 
     for(let i = snakeBody.length-1; i>0; i--){
         snakeBody[i] = snakeBody[i-1];
@@ -66,6 +86,10 @@ function update(){
     if(snakeBody.length){
         snakeBody[0] = [snakeX,snakeY]
     }
+
+
+
+    
 
     //snake
     createSnake();
@@ -86,7 +110,7 @@ for (let i = 0; i < snakeBody.length; i++){
 }
 
 
-//!!!!!!I COULD ADD POISON WHICH RANDOMLY GENERATES
+
  
 function createSnake(){
     context.fillStyle="darkBlue";
@@ -142,6 +166,11 @@ function drawBoard(){
             context.fillRect(colCount * blockSize, rowCount * blockSize, blockSize, blockSize);
         }
     }
+}
+
+function randomRot(){
+    rotX = Math.floor(Math.random() * cols) * blockSize; //(0-19) * 25 gives us our column number!
+    rotY = Math.floor(Math.random() * rows) * blockSize;
 }
 
 
