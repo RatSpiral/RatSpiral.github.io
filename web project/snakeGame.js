@@ -44,15 +44,21 @@ function update(){
     context.fillStyle = "lightGreen";
     context.fillRect(0,0,board.width,board.height) //starting at the corner of the page e.g (0,0) and make it light green
 
-    //snake
-    context.fillStyle="darkBlue";
-    snakeX += velocityX;
-    snakeY += velocityY;
-    context.fillRect(snakeX,snakeY,blockSize,blockSize); // paints at the cooardinate of 5,5 (snakex/y) and fills one square 
-
     //Apple
     context.fillStyle = "red";
     context.fillRect(appleX,appleY,blockSize,blockSize);
+
+    if (snakeX == appleX && snakeY == appleY){
+        randomFood();
+    }
+
+    //snake
+    context.fillStyle="darkBlue";
+    snakeX += velocityX * blockSize/2;
+    snakeY += velocityY * blockSize/2;
+    context.fillRect(snakeX,snakeY,blockSize,blockSize); // paints at the cooardinate of 5,5 (snakex/y) and fills one square 
+
+    
 }
 
 function randomFood(){ //This ensure the apple isn't fixed in one place!
