@@ -1,130 +1,114 @@
-//A canvas is a certain amount of squares
-//These will have rows and columns which we must be aware of in this game
-//As the board squares have meaning e.g location of snake. 
-//We will be able to refer to x and y. 
-
-//up will be y-1, down is y+1. 
-//boxSize variable controls the size of each individual piece of the board. 
-//boxSize must be considered e.g all x and y must be multipled by boxSize!
-
-//board code!
-
-var blockSize = 25;
-var rows = 20;
-var cols = 20;
-var board;
+//Board variables
+var blockSize = 25; //each block is 25
+var rows = 20; //there are 20 rows
+var cols = 20; //there are 20 columns
+var board; 
 var context; //what we use to draw with
 var score = 0;
 var gameOver = false;
 
-//snake code!
+//Snake variables
 var snakeX = blockSize * 5;
-var snakeY = blockSize * 5; // Will begin at 5,5. 
-var velocityX = 0;//Snake needs to have a speed because it is moving
-var velocityY = 0; //begin at zero as it begins the game still
-var snakeBody = [];
+var snakeY = blockSize * 5;
+var velocityX = 0; //SNake needs to have a speed because it is moving
+var velocityY = 0; //begins at zero as it is still for both of them
+var snakeBody = []; //array that will hold our snake body!
 
-//apple code!
+//Apple variables
 var appleX;
 var appleY;
 
+//rotten apple code
+var rotX;
+var rotY;
 
-//rotten apple
-var rotX = 0 * blockSize;
-var rotY = 0 * blockSize;
+//Game play loop
 
+window.onload = function(){
 
-window.onload = function(){ //this happens when window is loaded.
-    //get the board
-    board = document.getElementById("board");
+    board = document.getElementById("board"); //takes the id of the canvas from the html
     board.height = rows * blockSize;
     board.width = cols * blockSize;
     context = board.getContext("2d");
 
-    randomFood(); //places!
-    randomRot();
+    randomApple(); //generates random coordinates for apple, e.g intialises them
+
     document.addEventListener("keyup", changeDirection);
-  
-    setInterval(update, 1000/10); //every hundred milliseconds, it will run the update function
+
+    setInterval(update,1000/10); //calls update every 10 milliseconds
+
 }
+
+//Update function
 
 function update(){
 
+    //Check whether the game is over
     if(gameOver){
         return;
     }
-    //board (canvas)
+
+    //Draw board
     drawBoard();
-    //context.fillStyle = "lightGreen";
-    //context.fillRect(0,0,board.width,board.height) //starting at the corner of the page e.g (0,0) and make it light green
 
-    //Apple - tried to put this in a function but i couldn't get it working! will revisit later.
-    context.fillStyle = "red";
-    context.fillRect(appleX,appleY,blockSize,blockSize);
+    //Draw apple
+    drawApple();
+   
+   // Snake eats apple detection
+if (snakeX == appleX && snakeY == appleY) {
+    score++;
+    snakeBody.push([appleX, appleY]); // Pushes the 'current' coordinates to the snakeBody array
+    randomApple(); // Changes the random apple coordinates
 
-    if (snakeX == appleX && snakeY == appleY){
-        score++;
-        snakeBody.push([appleX,appleY]); //grows the next part of the body where the food was. 
-        randomFood();
-        randomRot();
-    }
-
-    //Evil Apple???
-    for(let i = 0; i<score;i++){
-    context.fillStyle = "black";
-    context.fillRect(rotX+(i*25),rotY+(i*25),blockSize,blockSize)
-    if(snakeX==rotX && snakeY == rotY){
-        randomRot();
-        alert("rot!");
-    }
+    // Update the score display
+    const scoreCurrent = document.getElementById('message');
+    scoreCurrent.textContent = 'Score: ' + score;
 }
 
-    for(let i = snakeBody.length-1; i>0; i--){
-        snakeBody[i] = snakeBody[i-1];
+    //snake body growth
+
+    for(let i = snakeBody.length-1;i>0;i--){ 
+        snakeBody[i] = snakeBody[i-1]
     }
 
     if(snakeBody.length){
         snakeBody[0] = [snakeX,snakeY]
     }
 
+    //snake being drawn
+    drawSnake();
 
+    //game over check
+    gameCheck();
 
-    
-
-    //snake
-    createSnake();
-   
-// game over conditions
-if (snakeX < 0 || snakeX > cols*blockSize || snakeY <0 || snakeY > rows*blockSize){
-    gameOver = true;
-    alert("Game Over! You left the game board!"); //causes notification to pop up!
 }
 
-for (let i = 0; i < snakeBody.length; i++){
-    if(snakeX==snakeBody[i][0] && snakeY == snakeBody[i][1]){
-        gameOver = true;
-        alert("Game Over! You touched your tail!")
+function drawBoard(){
+    for(let rowC = 0; rowC < rows; rowC++){ //moves through the rows
+        for(let colC = 0; colC < cols; colC++){
+
+            if((rowC+colC) % 2 == 0){ //creating alternating grid of lightGreen and paleGreen
+                context.fillStyle = 'lightGreen';
+            }
+
+            else{
+                context.fillStyle = 'paleGreen';
+            }
+
+            context.fillRect(colC * blockSize, rowC*blockSize, blockSize, blockSize);
+
+        }
+
+
     }
 }
-    
+
+function drawApple(){
+    context.fillStyle = "red";
+    context.fillRect(appleX,appleY,blockSize,blockSize);
 }
 
-
-
- 
-function createSnake(){
-    context.fillStyle="darkBlue";
-    snakeX += velocityX * blockSize/2;
-    snakeY += velocityY * blockSize/2;
-    context.fillRect(snakeX,snakeY,blockSize,blockSize); // paints at the cooardinate of 5,5 (snakex/y) and fills one square 
-
-    for (let i = 0; i <snakeBody.length;i++){
-        context.fillRect(snakeBody[i][0],snakeBody[i][1],blockSize,blockSize);
-    }
-
-}
-
-function randomFood(){ //This ensure the apple isn't fixed in one place!
+function randomApple(){ //This ensure the apple isn't fixed in one place!
     appleX = Math.floor(Math.random() * cols) * blockSize; //(0-19) * 25 gives us our column number!
     appleY = Math.floor(Math.random() * rows) * blockSize;
 }
@@ -154,27 +138,33 @@ function changeDirection(e){
     }
 }
 
-function drawBoard(){
-    for (let rowCount = 0; rowCount < rows; rowCount++) {
-        for (let colCount = 0; colCount < cols; colCount++) {
-            if ((rowCount + colCount) % 2 == 0) { //Creating an alternating grid of lightGreen and paleGreens
-                context.fillStyle = 'lightGreen';
-            } else {
-                context.fillStyle = 'paleGreen';
-            }
-            // Draw the square
-            context.fillRect(colCount * blockSize, rowCount * blockSize, blockSize, blockSize);
-        }
+function drawSnake(){
+    context.fillStyle="darkBlue";
+    snakeX += velocityX * blockSize; 
+    snakeY += velocityY * blockSize;
+    context.fillRect(snakeX,snakeY,blockSize,blockSize);
+
+    for(let i=0; i<snakeBody.length;i++){
+        context.fillRect(snakeBody[i][0],snakeBody[i][1],blockSize,blockSize)
     }
 }
 
-function randomRot(){
-    rotX = Math.floor(Math.random() * cols) * blockSize; //(0-19) * 25 gives us our column number!
-    rotY = Math.floor(Math.random() * rows) * blockSize;
+
+function gameCheck(){
+
+    if (snakeX < 0 || snakeX > cols*blockSize || snakeY <0 || snakeY > rows*blockSize){
+        gameOver = true;
+        alert("Game Over! You left the game board!"); //causes notification to pop up!
+    }
+    
+    for (let i = 0; i < snakeBody.length; i++){
+        if(snakeX==snakeBody[i][0] && snakeY == snakeBody[i][1]){
+            gameOver = true;
+            alert("Game Over! You touched your tail!")
+        }
+    }
+
 }
-
-
-
 
 
 
