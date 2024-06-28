@@ -6,6 +6,7 @@ var board;
 var context; //what we use to draw with
 var score = 0;
 var gameOver = false;
+var gameStart = true;
 
 //Snake variables
 var snakeX = blockSize * 5;
@@ -24,6 +25,7 @@ var rotY;
 
 //Game play loop
 
+
 window.onload = function(){
 
     board = document.getElementById("board"); //takes the id of the canvas from the html
@@ -35,6 +37,11 @@ window.onload = function(){
 
     document.addEventListener("keyup", changeDirection);
 
+    let button = document.getElementById("Restart")
+    if(button){
+        button.addEventListener("click", restartGame());
+    }
+
     setInterval(update,1000/10); //calls update every 10 milliseconds
 
 }
@@ -45,6 +52,7 @@ function update(){
 
     //Check whether the game is over
     if(gameOver){
+        gameStart = False;
         return;
     }
 
@@ -105,6 +113,7 @@ function drawBoard(){
 
 function drawApple(){
     context.fillStyle = "red";
+    
     context.fillRect(appleX,appleY,blockSize,blockSize);
 }
 
@@ -166,5 +175,8 @@ function gameCheck(){
 
 }
 
+function restartGame(){
+
+}
 
 
