@@ -1,0 +1,4 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Emily Hewitt Portfolio'
+theme = "port-hugo-main"
